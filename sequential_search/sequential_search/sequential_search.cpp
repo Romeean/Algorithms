@@ -34,8 +34,8 @@ int quickSequentialSearch(vector<int> arr, int element) {
 int main()
 {
   vector<int> arr = { 1, 2, 3, 4, 5, 6, 7, 8, };
-  cout << quickSequentialSearch(arr, 7) << endl;
-  cout << sequentialSearch(arr, 7) << endl;
+  cout << quickSequentialSearch(arr, 8) << endl;
+  cout << sequentialSearch(arr, 8) << endl;
 
   return 0;
 }
