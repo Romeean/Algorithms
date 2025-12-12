@@ -4,13 +4,12 @@
 using namespace std;
 
 
-
 void hayonTower(int n, char A, char B, char C) {
 	if (n == 0) return;
 
 	hayonTower(n - 1, A, C, B);
 
-	cout << "Move disk " << n << " from " << A << " to " << B << endl;
+	cout << "Move disk " << n << " from " << A << " to " << C << endl;
 
 	hayonTower(n - 1, C, B, A);
 }
