@@ -23,10 +23,10 @@ vector<int> insertionSort(vector<int> arr) {
 
 
 vector<int> brutalForce(vector<int> manyA, vector<int> manyB) {
-	
+
 	int lengthA = manyA.size();
 	int lengthB = manyB.size();
-	
+
 	vector<int> cross;
 
 	for (int i = 0; i < lengthA; i++) {
@@ -39,6 +39,20 @@ vector<int> brutalForce(vector<int> manyA, vector<int> manyB) {
 
 	return insertionSort(cross);
 
+};
+
+vector<int> findDubles(vector<int> arr) {
+	int length = arr.size();
+
+	vector<int> RESULT;
+
+	for (int i = 0; i < length; i++) {
+		if (i == length - 1 || arr[i] != arr[i + 1]) {
+			RESULT.push_back(arr[i]);
+		}
+	}
+
+	return RESULT;
 }
 
 int main()
@@ -46,7 +60,8 @@ int main()
 	vector<int> manyA = { 1, 2, 3, 4, 5, 6, 7, 8, 8 };
 	vector<int> manyB = { 9, 10, 11, 12, 13, 14, 15, 8 };
 
-	vector<int> result = brutalForce(manyA, manyB);
+	vector<int> brutalForceResult = brutalForce(manyA, manyB);
+	vector<int> result = findDubles(brutalForceResult);
 	for (int number : result) {
 		cout << number << " ";
 	};
