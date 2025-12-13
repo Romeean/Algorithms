@@ -11,10 +11,11 @@ void showHeap(vector<int> arr) {
   int length = arr.size();
   int level = 0;
 
-  for (int i = 0; i < length; i++) {
+  while ((1 << level) - 1 < length) {
     
     int left = (1 << level) - 1;
     int right = (1 << level + 1) - 2;
+
 
     for (int j = left; j <= right && right < length; j++) {
       cout << arr[j] << " ";
@@ -25,7 +26,7 @@ void showHeap(vector<int> arr) {
 
  }
 
-void heapify(const vector<int> &arr, int length, int i) {
+void heapify(vector<int> &arr, int length, int i) {
   
   int largest = i;
   int left = 2 * i + 1;
@@ -43,7 +44,7 @@ void heapify(const vector<int> &arr, int length, int i) {
   }
 
 }
-vector<int> heapSort(vector<int> arr) {
+vector<int> heapSort(vector<int> &arr) {
   if (arr.size() == 0) return arr;
   
   int length = arr.size();
@@ -64,6 +65,7 @@ int main()
 {
   vector<int> arr = { 1, 2, 3, 4, 5, 6, 7 };
   vector<int> result = heapSort(arr);
+  
   showHeap(result);
   
 
