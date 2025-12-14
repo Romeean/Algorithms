@@ -55,7 +55,7 @@ vector<int> heapSort(vector<int> &arr) {
 
   for (int i = length - 1; i >= 0; i--) {
     swap(arr[i], arr[0]);
-    heapify(arr, length, 0);
+    heapify(arr, i, 0);
   }
   
   return arr;
