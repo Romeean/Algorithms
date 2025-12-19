@@ -1,8 +1,9 @@
 ﻿#include <iostream>
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 
 using namespace std;
-
 
 
 void showHeap(vector<int> arr) {
@@ -61,12 +62,37 @@ vector<int> heapSort(vector<int> &arr) {
   return arr;
 }
 
+vector<int> createRandomVector(int size) {
+  vector<int> arr(size);
+
+  for (int i = 0; i < size; i++) {
+    arr[i] = rand() % size;
+  }
+
+  return arr;
+}
 int main()
 {
-  vector<int> arr = { 1, 2, 3, 4, 5, 6, 7 };
-  vector<int> result = heapSort(arr);
-  
-  showHeap(result);
+  srand(time(nullptr));
+
+  int tests[3] = { 100000, 1000000, 10000000 };
+
+  for (int i = 0; i < 3; i++) {
+
+    int sizeOfArray = tests[i];
+
+    vector<int> arr = createRandomVector(sizeOfArray);
+
+    clock_t start = clock();
+    heapSort(arr);
+    clock_t end = clock();
+
+    double timeSpent = double(end - start) / CLOCKS_PER_SEC;
+
+    cout << "n = " << sizeOfArray
+      << " | time = " << timeSpent
+      << " seconds" << endl;
+  }
   
 
   return 0;

@@ -89,11 +89,13 @@ int retrive(int position, List& List) {
 
 void remove(int position, List& List) {
 	if (position == 0) {
+		if (List.head== nullptr) return;
 		Node* currentNode = List.head;
-		currentNode->nextNode = nullptr;
+
+		List.head = List.head->nextNode;
 
 		delete currentNode;
-		
+		return;
 	}
 	
 	Node* currentNode = List.head;
@@ -101,13 +103,16 @@ void remove(int position, List& List) {
 	int i = 0;
 	while (currentNode != nullptr) {
 		if (position - 1 == i) {
+			if (currentNode->nextNode == nullptr) return;
+
 			Node* nodeToDelete = currentNode->nextNode;
 			Node* nextNode = nodeToDelete->nextNode;
 
 			currentNode->nextNode = nextNode;
 
 			delete nodeToDelete;
-
+			
+			return;
 		}
 		currentNode = currentNode->nextNode;
 	}
@@ -125,6 +130,7 @@ int next(int position, List& List) {
 		i++;
 	}
 
+	return -1;
 }
 
 int previous(int position, List &List) {
@@ -136,22 +142,31 @@ int previous(int position, List &List) {
 			return currentNode->value;
 		}
 		i++;
+
+		currentNode = currentNode->nextNode;
 	}
 
+	return -1;
 }
 
 void makeNull(List &List) {
-	Node* currentNode = List.head;
 
 	int i = 0;
-	while (currentNode != nullptr) {
-		currentNode = nullptr;
-		currentNode = currentNode->nextNode;
+	while (List.head != nullptr) {
+		Node* currentNode = List.head;
+		
+		List.head = List.head->nextNode;
+		delete currentNode;
 	}
+
+	return;
 }
 
 int first(List &List) {
-	return List.head->value;
+	if (List.head != nullptr) {
+		return List.head->value;
+	};
+	return -1;
 }
 
 void showList(List &List) {
@@ -163,11 +178,89 @@ void showList(List &List) {
 
 		currentNode = currentNode->nextNode;
 	}
+
+	return;
 }
 
 int main()
 {
-	List List;
+	List list{ nullptr };
+
+	while (true) {
+		cout << "\n===== LIST MENU =====\n";
+		cout << "1  - INSERT(x, p)\n";
+		cout << "2  - DELETE(p)\n";
+		cout << "3  - LOCATE(x)\n";
+		cout << "4  - RETRIEVE(p)\n";
+		cout << "5  - NEXT(p)\n";
+		cout << "6  - PREVIOUS(p)\n";
+		cout << "7  - FIRST()\n";
+		cout << "8  - PRINTLIST()\n";
+		cout << "9  - MAKENULL()\n";
+		cout << "0  - EXIT\n";
+		cout << "Choose: ";
+
+		int choice;
+		cin >> choice;
+
+		if (choice == 0) break;
+
+		if (choice == 1) {
+			int x, p;
+			cout << "Value x: ";
+			cin >> x;
+			cout << "Position p: ";
+			cin >> p;
+			insert(x, p, list);
+		}
+		else if (choice == 2) {
+			int p;
+			cout << "Position p: ";
+			cin >> p;
+			remove(p, list);
+		}
+		else if (choice == 3) {
+			int x;
+			cout << "Value x: ";
+			cin >> x;
+			cout << "Position: " << locate(x, list) << endl;
+		}
+		else if (choice == 4) {
+			int p;
+			cout << "Position p: ";
+			cin >> p;
+			cout << "Value: " << retrive(p, list) << endl;
+		}
+		else if (choice == 5) {
+			int p;
+			cout << "Position p: ";
+			cin >> p;
+			cout << "Next value: " << next(p, list) << endl;
+		}
+		else if (choice == 6) {
+			int p;
+			cout << "Position p: ";
+			cin >> p;
+			cout << "Previous value: " << previous(p, list) << endl;
+		}
+		else if (choice == 7) {
+			cout << "First value: " << first(list) << endl;
+		}
+		else if (choice == 8) {
+			cout << "List: ";
+			showList(list);
+			cout << endl;
+		}
+		else if (choice == 9) {
+			makeNull(list);
+			cout << "List cleared\n";
+		}
+		else {
+			cout << "Invalid option\n";
+		}
+	}
+
+	makeNull(list); 
 	return 0;
 }
 
