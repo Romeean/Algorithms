@@ -1,21 +1,13 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
 
 using namespace std;
 //– INSERT(x, p, L).Вставити елемент x у позицію p у списку L.
- 
 //– LOCATE(x, L).Повертає позицію елемента x у списку L.
-
 //– RETRIEVE(p, L).Повертає елемент, що стоїть в позиції p списку
-
 //– DELETE(p, L).Цей оператор видаляє елемент у позиції р списку
-
 //– NEXT(p, L), PREVIOUS(p, L).Ці функції повертають відповідно наступну й попередню позиції від позиції р у списку L.
- 
 //– MAKENULL(L).Ця функція робить список L порожнім.
-
 //– FIRST(L).Ця функція повертає першу позицію в списку L.
-
 //– PRINTLIST(L).Друкує елементи списку L у порядку їх розташування.
 
 
@@ -41,7 +33,7 @@ void insert(int x, int position, List &List){
 	int i = 0;
 	while (currentNode != nullptr) {
 		
-		if (position - 1 == i) {
+		if (position == i) {
 			Node* nodeNext = currentNode->nextNode;    // получаем ноду на элемент i + 1;
 			Node* newNode = new Node{ x, nullptr };    // создаем новый элемент
 
@@ -55,17 +47,17 @@ void insert(int x, int position, List &List){
 	return;
 }
 
-int locate(int x ,List &List) {
-	Node* currentNode= List.head;
+int locate(int x, List &List) {
+	Node* currentNode = List.head;
 
 	int i = 0;
-	while(currentNode!= nullptr) {
+	while(currentNode != nullptr) {
 		
 		if (currentNode->value == x) {
 			return i;
 		}
 
-		currentNode= currentNode->nextNode;
+		currentNode = currentNode->nextNode;
 		i++;
 	}
 
@@ -73,9 +65,10 @@ int locate(int x ,List &List) {
 }
 
 int retrive(int position, List& List) {
-	Node* currentNode= List.head;
+	Node* currentNode = List.head;
 	int i = 0;
 	while(currentNode!= nullptr){
+		
 		if (i == position) {
 			return currentNode->value;
 		}
@@ -89,11 +82,11 @@ int retrive(int position, List& List) {
 
 void remove(int position, List& List) {
 	if (position == 0) {
-		if (List.head== nullptr) return;
+		if (List.head == nullptr) return;
+		
 		Node* currentNode = List.head;
-
 		List.head = List.head->nextNode;
-
+		
 		delete currentNode;
 		return;
 	}
@@ -106,13 +99,10 @@ void remove(int position, List& List) {
 			if (currentNode->nextNode == nullptr) return;
 
 			Node* nodeToDelete = currentNode->nextNode;
-			Node* nextNode = nodeToDelete->nextNode;
+			currentNode->nextNode = nodeToDelete->nextNode;
 
-			currentNode->nextNode = nextNode;
 
 			delete nodeToDelete;
-			
-			return;
 		}
 		currentNode = currentNode->nextNode;
 	}
