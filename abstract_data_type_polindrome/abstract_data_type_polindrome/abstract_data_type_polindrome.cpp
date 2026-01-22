@@ -81,20 +81,52 @@ void polindrome(Stack &stack) {
 
 int main()
 {
+  int choice = -1;
+  cout << "1. Write polindrome" << endl;
+  cout << "2. Exit" << endl;
 
-  vector<string> data = { "404", "1232", "jidg", "apa", "souidhghsiouhg", "09213582095" };
-  Stack* stack = new Stack{ nullptr };
+  while (true) {
+    cin >> choice;
+    switch (choice) {
+      case 1: {
+        vector<string> data;
+        Stack* stack = new Stack{ nullptr };
 
-  for (int i = 0; i < data.size(); i++) {
-    push(*stack, data[i]);
+        int count;
+        cout << "How many words do you want to check for palindromes?";
+        cin >> count;
+
+        cout << "Okay, write them all: " << endl;
+
+        for (int i = 0; i < count; i++) {
+          
+          string currentWord;
+          cin >> currentWord;
+          data.push_back(currentWord);
+          cout << i + 1 << " out of " << count << endl;
+        }
+
+        for (int i = 0; i < data.size(); i++) {
+          Node* node = new Node{ data[i], nullptr };
+          Node* currentNode = stack->head;
+          node->nextNode = currentNode;
+          stack->head = node;
+        }
+
+        polindrome(*stack);
+
+        break;
+      }
+      case 2: {
+        return 0;
+      }
+      default: {
+        cout << "unknown command, try again." << endl;
+        break;
+      }
+    }
   }
-
-  polindrome(*stack);
   
-
   
-
-
-  delete stack;
   return 0;
 }
