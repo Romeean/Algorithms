@@ -103,6 +103,7 @@ void remove(int position, List& List) {
 
 
 			delete nodeToDelete;
+			return;
 		}
 		currentNode = currentNode->nextNode;
 	}
@@ -141,7 +142,6 @@ int previous(int position, List &List) {
 
 void makeNull(List &List) {
 
-	int i = 0;
 	while (List.head != nullptr) {
 		Node* currentNode = List.head;
 		
