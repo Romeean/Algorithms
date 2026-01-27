@@ -26,20 +26,6 @@ void push(Stack& stack, const string& value) {
 }
 
 
-int getStackLength(Stack& stack) {
-  int length = 0;
-  Node* currentNode = stack.head;
-
-  while (currentNode != nullptr) {
-    length++;
-
-    currentNode = currentNode->nextNode;
-  }
-
-
-  return length;
-}
-
 bool isPolidrome(const string& value) {
   if (value.size() == 0) return false;
   
@@ -60,40 +46,63 @@ void polindrome(Stack &stack) {
   if (stack.head == nullptr) return;
 
   Node* currentNode = stack.head;
-  int length = getStackLength(stack);
-
-  for (int i = 0; i < length; i++) {
-    
+  
+  while (currentNode != nullptr) {
     bool result = isPolidrome(currentNode->value);
+    
     if (!result) {
       cout << currentNode->value << " isn't a palindrome" << endl;
     }
     else {
       cout << currentNode->value << " is a palindrome" << endl;
-
     }
 
     currentNode = currentNode->nextNode;
   }
-
   return;
+}
+
+void clearStack(Stack* stack) {
+  Node* currentNode = stack->head;
+  
+  while (currentNode != nullptr) {
+    Node* next = currentNode->nextNode;
+    delete currentNode;
+    currentNode = next;
+  }
+  
+  delete stack;
 }
 
 int main()
 {
   int choice = -1;
-  cout << "1. Write polindrome" << endl;
-  cout << "2. Exit" << endl;
 
   while (true) {
-    cin >> choice;
+    cout << "\n1. Write polindrome " << endl;
+    cout << "2. Exit" << endl;
+
+    if (!(cin >> choice)) {
+      cout << "\nUnknown command " << endl;
+
+      cin.clear();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
+      continue;
+    }
+
     switch (choice) {
       case 1: {
         Stack* stack = new Stack{ nullptr };
 
         int count;
-        cout << "How many words do you want to check for palindromes?";
-        cin >> count;
+        cout << "How many words do you want to check for palindromes?: ";
+
+        while(!(cin >> count)){
+          cout << "It is not a int value! Try again: ";
+
+          cin.clear();
+          cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
         cout << "Okay, write them all: " << endl;
 
@@ -108,13 +117,15 @@ int main()
 
         polindrome(*stack);
 
+        
+        clearStack(stack);
         break;
       }
       case 2: {
         return 0;
       }
       default: {
-        cout << "unknown command, try again." << endl;
+   
         break;
       }
     }
